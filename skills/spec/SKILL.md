@@ -11,7 +11,11 @@ Write a spec from the current conversation and codebase understanding. Do not in
 
 2. Decide the seams at which the feature gets tested. A **seam** is a place where a test replaces a real part with a fake one. Prefer a seam that exists. Choose the highest seam you can. Fewer seams are better. One is ideal.
 
-3. Write the spec to `docs/specs/<kebab-case-name>.md`. Create the directory if it does not exist. Use the template below. Tell the user the path.
+3. Write the spec to `docs/specs/<kebab-case-name>.md`. Create the directory if it does not exist. Use the template below.
+
+4. Tell the user the path. Then give them the next command: `/implement <path>`. Do not build.
+
+The spec is the whole brief for the build. `/implement` runs in its own scope and cannot see this conversation. Write down every decision it needs.
 
 ## Style
 
