@@ -7,8 +7,10 @@ The repo is the source of truth. I symlink it into whichever agent I use, so the
 ## Install
 
 ```sh
-ln -s /home/gian/skills/skills ~/.claude/skills
+rm -f ~/.claude/skills && ln -s /home/gian/skills/skills ~/.claude/skills
 ```
+
+The `rm -f` matters. If `~/.claude/skills` already exists, plain `ln -s` links *into* it and creates a nested `skills/skills` instead of replacing the link. `rm -f` deletes a symlink but refuses to delete a real directory, so it cannot destroy skills that live there for real.
 
 ## Skills
 
