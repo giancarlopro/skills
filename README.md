@@ -12,7 +12,9 @@ ln -s /home/gian/skills/skills ~/.claude/skills
 
 ## Skills
 
-- **grill** — interviews me until the core idea is clear, then builds. Asks one question at a time, discovers facts itself, and defaults anything cheap to change. Reports every default in one **Assumed** list before it starts.
+The usual flow is `/grill` then `/spec`.
+
+- **grill** — interviews me until the core idea is clear, then stops. It explores and never builds. Asks one question at a time, discovers facts itself, and defaults anything cheap to change. Ends with an **Assumed** list of every default it took.
 - **spec** — turns the conversation into a spec at `docs/specs/<name>.md`. No interview, no issue tracker, no setup step.
 
 Both use one house style, taken from Simplified Technical English (ASD-STE100) without its controlled vocabulary: one idea per sentence, active voice, one word for one meaning. Shorter specs cost fewer tokens and leave a smaller model less room to guess.
