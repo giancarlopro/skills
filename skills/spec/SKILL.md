@@ -1,6 +1,6 @@
 ---
 name: spec
-description: Turn the current conversation into a spec file under docs/. No interview — it synthesizes what you already discussed.
+description: Turn the current conversation into a spec file under docs/specs/. No interview — it synthesizes what you already discussed.
 ---
 
 Write a spec from the current conversation and codebase understanding. Do not interview the user. Synthesize what you already know.
@@ -11,7 +11,7 @@ Write a spec from the current conversation and codebase understanding. Do not in
 
 2. Decide the seams at which the feature gets tested. A **seam** is a place where a test replaces a real part with a fake one. Prefer a seam that exists. Choose the highest seam you can. Fewer seams are better. One is ideal.
 
-3. Write the spec to `docs/<kebab-case-name>.md`. Use the template below. Tell the user the path.
+3. Write the spec to `docs/specs/<kebab-case-name>.md`. Create the directory if it does not exist. Use the template below. Tell the user the path.
 
 ## Style
 
