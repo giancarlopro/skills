@@ -1,11 +1,11 @@
 ---
 name: grill
-description: Grill the user about the core of a plan, decision, or idea. Explores only — it never builds. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
+description: Grill the user about the core of a plan, decision, or idea, then build once they confirm. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.
 ---
 
-Interview me until the core idea is clear. Then stop.
+Interview me until the core idea is clear. Then summarise and wait.
 
-Grilling is exploration. Do not write code. Do not change files. Do not build, even after I confirm the summary.
+Until I confirm, this is exploration. Do not write code. Do not change files.
 
 Ask one question at a time and wait for my answer. Give your recommended answer with it, so I can reply "yes".
 
@@ -15,7 +15,11 @@ Ask only about what changes the shape of the work: the goal, hard-to-reverse cho
 
 When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use.
 
-Then wait. I usually run `/spec` next. Build only when I ask you to, and do not restart the grilling when I do.
+Then wait for one of three answers:
+
+- **I change some defaults.** Apply my changes, summarise again, and wait again. Repeat as often as I need.
+- **I confirm.** Start building. Do not restart the grilling.
+- **I ask for a spec.** Run `/spec` instead of building.
 
 ## House style
 

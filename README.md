@@ -12,9 +12,9 @@ ln -s /home/gian/skills/skills ~/.claude/skills
 
 ## Skills
 
-The usual flow is `/grill` then `/spec`.
+The usual flow is `/grill`, then either `/spec` or a build.
 
-- **grill** — interviews me until the core idea is clear, then stops. It explores and never builds. Asks one question at a time, discovers facts itself, and defaults anything cheap to change. Ends with an **Assumed** list of every default it took.
+- **grill** — interviews me until the core idea is clear, then summarises and waits. Asks one question at a time, discovers facts itself, and defaults anything cheap to change. Ends with an **Assumed** list of every default it took. I change defaults and it summarises again; I confirm and it builds; I ask for a spec and it runs `/spec`.
 - **spec** — turns the conversation into a spec at `docs/specs/<name>.md`. No interview, no issue tracker, no setup step.
 
 Both use one house style, taken from Simplified Technical English (ASD-STE100) without its controlled vocabulary: one idea per sentence, active voice, one word for one meaning. Shorter specs cost fewer tokens and leave a smaller model less room to guess.
