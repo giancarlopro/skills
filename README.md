@@ -4,7 +4,7 @@ My personal skills for everyday development using AI.
 
 The repo is the source of truth. I symlink it into whichever agent I use, so the skills travel with me. Each `SKILL.md` is plain Markdown with `name` and `description` only.
 
-`implement` breaks that rule on purpose. It pins its own model, so it carries four Claude Code keys: `context`, `model`, `effort`, and `argument-hint`. An agent ignores keys it does not know, so `implement` still runs elsewhere — on whatever model that agent already uses. The pin degrades. The skill does not break.
+`implement` breaks that rule on purpose. It pins its own model, so it carries three Claude Code keys: `model`, `effort`, and `argument-hint`. An agent ignores keys it does not know, so `implement` still runs elsewhere — on whatever model that agent already uses. The pin degrades. The skill does not break.
 
 ## Install
 
@@ -30,9 +30,11 @@ The interview needs the best model. The build does not. So each step pins what i
 
 `grill` and `spec` carry no `model` key. They run on the session model, which is my best one.
 
-`implement` sets `context: fork` and `model: sonnet`. It runs as a fork: its own scope, the same chat window, a small model. Its turns stay out of the main transcript, and the session model never changes. I switch nothing by hand.
+`implement` sets `model: sonnet`. Claude Code switches the main loop to that model for the run, then returns to the session model on my next message. I switch nothing by hand.
 
-A fork does not inherit the conversation. Claude Code gives it the skill file and its argument, and nothing else. So the spec file is the only handoff, which is why `/grill` always ends at a spec. The small model then reads a tight definition instead of a long interview.
+The build stays in the main chat, so it prompts me for permission like any other work. A forked skill cannot. Claude Code suppresses a fork's prompts, so a forked build cannot run the tests it just wrote. That rules the fork out, at the cost of a shared context.
+
+The shared context is why `/spec` asks for `/compact` first. The spec file is the brief, and `/grill` always ends at one. Compaction clears the interview that produced it, so the small model reads a short definition instead of a long argument.
 
 ## Goals
 
