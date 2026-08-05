@@ -1,7 +1,6 @@
 ---
 name: implement
-description: Build the feature a spec describes. Runs in its own scope on a small model. Use after /spec writes a spec file.
-context: fork
+description: Build the feature a spec describes. Runs on a small model. Use after /spec writes a spec file.
 model: sonnet
 effort: medium
 argument-hint: <path to spec>
@@ -9,7 +8,7 @@ argument-hint: <path to spec>
 
 Build what the spec describes.
 
-The spec is your whole brief. You cannot see the conversation that produced it. Do not ask for it.
+The spec is your brief. Treat the rest of the conversation as background. When the two disagree, follow the spec.
 
 ## Input
 
