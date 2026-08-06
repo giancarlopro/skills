@@ -13,9 +13,9 @@ Write a spec from the current conversation and codebase understanding. Do not in
 
 3. Write the spec to `docs/specs/<kebab-case-name>.md`. Create the directory if it does not exist. Use the template below.
 
-4. Tell the user the path. Then give them the next two commands, in order: `/compact`, then `/implement <path>`. Do not build.
+4. Tell the user the path. Do not build.
 
-The spec is the brief for the build. `/implement` runs on a small model, and `/compact` shortens what it reads first. Write down every decision it needs.
+The spec is the brief for the build. A small model may read it, so write down every decision it needs.
 
 ## Style
 

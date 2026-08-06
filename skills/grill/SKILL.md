@@ -20,7 +20,7 @@ Then wait for one of two answers:
 - **I change some defaults.** Apply my changes, summarise again, and wait again. Repeat as often as I need.
 - **I confirm.** Run `/spec`. Do not build. Do not restart the grilling.
 
-The build is a separate step. `/spec` writes the definition to a file, and `/implement` builds from that file.
+The build is a separate step. `/spec` writes the definition to a file.
 
 ## House style
 
