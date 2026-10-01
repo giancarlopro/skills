@@ -16,14 +16,15 @@ The `rm -f` matters. If `~/.claude/skills` already exists, plain `ln -s` links *
 
 ## Skills
 
-Two of these pair up. Two stand alone.
+Two of these pair up. Three stand alone.
 
 - **grill** — interviews me until the core idea is clear, then summarises and waits. Asks one question at a time, discovers facts itself, and defaults anything cheap to change. Ends with an **Assumed** list of every default it took. I change defaults and it summarises again; I confirm and it runs `/spec`.
-- **spec** — turns the conversation into a spec at `docs/specs/<name>.md`. No interview, no issue tracker, no setup step. It reports the path and stops.
+- **spec** — turns the conversation into a numbered spec at `docs/specs/<NNN>-<name>.md`. No interview, no issue tracker, no setup step. It reports the path and stops.
 - **lazy** — builds what a spec describes, on a small model. I invoke it when I want the build done cheaply.
 - **create-sandbox** — writes a `.devcontainer/` that runs Claude with permission checks off, behind a deny-by-default firewall. It interviews me the way `grill` does, shows its decisions, and waits before writing.
+- **retro** — reads my past transcripts, finds where I corrected the agent, and traces each correction to a line in a skill here. Writes a report with proposed edits to `docs/retros/`, then waits. Applies the edits I pick. Never commits.
 
-All four use one house style, taken from Simplified Technical English (ASD-STE100) without its controlled vocabulary: one idea per sentence, active voice, one word for one meaning. Shorter specs cost fewer tokens and leave a smaller model less room to guess.
+All five use one house style, taken from Simplified Technical English (ASD-STE100) without its controlled vocabulary: one idea per sentence, active voice, one word for one meaning. Shorter specs cost fewer tokens and leave a smaller model less room to guess.
 
 ## Models
 
@@ -50,6 +51,18 @@ It enables bypass mode in both places I start Claude. The VSCode extension needs
 The container denies network egress by default and allows a short list of hosts. That is the part that makes the trade sound — the flag's own warning says to use it only without open internet. A script inside the container drops the rules when a one-off task needs them gone, with no rebuild.
 
 It mounts one file from the host: `~/.claude/.credentials.json`, read-write, so token refresh survives. Nothing else from `~/.claude` goes in. A permission-free Claude does not get my other projects' transcripts.
+
+## Transcripts
+
+`retro` exists because my corrections never reached the skills. I stop the agent, say what is wrong, and the fix holds for one session.
+
+Claude Code already saves every session as a JSONL transcript under `~/.claude/projects/`. So the corrections are on disk. `retro` mines them.
+
+A script beside the skill, `extract.py`, does the reading. It keeps only my own messages, each with the agent text before it, from sessions that used a skill from this repo. The model reads that, not the raw transcripts, which are mostly tool output.
+
+Each report lists the sessions it read, and the next run skips them. One correction counts once.
+
+Claude Code deletes transcripts after 30 days by default. I set `cleanupPeriodDays` to 365 in `~/.claude/settings.json`, so the record outlives the gap between retros. `retro` warns when the setting drops under 90.
 
 ## Goals
 
