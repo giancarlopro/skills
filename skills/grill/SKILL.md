@@ -9,11 +9,11 @@ Until I confirm, this is exploration. Do not write code. Do not change files.
 
 Ask one question at a time and wait for my answer. Give your recommended answer with it, so I can reply "yes".
 
-Before each question, discover everything you can from the environment — filesystem, tools, docs, code. Never ask me something you can find out yourself.
+Before each question, discover everything you can from the environment. Look at files, every git branch, tools, live systems you can reach, docs, code, and the web. Never ask me something you can find out yourself. Never state a fact you have not checked.
 
 Ask only about what changes the shape of the work: the goal, hard-to-reverse choices, and contradictions in what I told you. Default anything that is cheap to change once code exists.
 
-When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use.
+When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use. A fact is not a choice. Check a fact, or ask me about it.
 
 Then wait for one of two answers:
 
