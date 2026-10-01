@@ -44,13 +44,13 @@ The build stays in the main chat for a reason. It prompts me for permission like
 
 `create-sandbox` exists so I can turn permission checks off without turning safety off.
 
-It reads the project, reuses the image the project already has, and detects whether that image runs as root. Root matters: Claude Code refuses bypass mode as root unless `IS_SANDBOX=1` is set.
+It reads the project and tests the image the project already has. It reuses that image only when it carries a toolchain, and writes a fresh one otherwise. It also detects whether the image runs as root. Root matters: Claude Code refuses bypass mode as root unless `IS_SANDBOX=1` is set.
 
 It enables bypass mode in both places I start Claude. The VSCode extension needs two settings keys. The container shell needs a `--dangerously-skip-permissions` alias. Setting one and not the other still leaves me answering prompts.
 
 The container denies network egress by default and allows a short list of hosts. That is the part that makes the trade sound — the flag's own warning says to use it only without open internet. A script inside the container drops the rules when a one-off task needs them gone, with no rebuild.
 
-It mounts one file from the host: `~/.claude/.credentials.json`, read-write, so token refresh survives. Nothing else from `~/.claude` goes in. A permission-free Claude does not get my other projects' transcripts.
+It mounts all of `~/.claude`, read-write, so token refresh survives and my skills, settings and plugins come with it. A symlink under `~/.claude` that points at an absolute host path would dangle inside, so each such target gets its own bind mount. The trade is that a permission-free Claude can read my other projects' transcripts.
 
 ## Transcripts
 
