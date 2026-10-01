@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# Start the docker daemon, if it is not already up.
+#
+# The daemon is not started with the container, so a session that runs no
+# integration test pays nothing for it. Run this first, then run the tests.
+#
+# It runs as root inside this container. Rootless is blocked on a WSL2 kernel:
+# writing another process's uid_map fails with EIO, as root and holding
+# CAP_SETUID. See the note in devcontainer.json.
+#
+# Images cannot be pulled through the firewall. It allows the registry, which is
+# enough for a manifest and an auth token, and the layers come from a CDN on
+# hostnames an ipset cannot predict. Pull once with the firewall down:
+#
+#   sandbox-firewall-off
+#   ./.devcontainer/start-docker
+#   docker pull <image>
+#   sudo init-firewall.sh
+#
+# Start the daemon AFTER the firewall, not before. init-firewall.sh runs
+# `iptables -F` and `iptables -X`, which deletes the DOCKER chain the daemon
+# makes when it starts. Publishing a port then fails with "No chain/target/match
+# by that name". Re-running the firewall has the same effect, so restart the
+# daemon after you do.
+set -euo pipefail
+
+export DOCKER_HOST="${DOCKER_HOST:-unix:///var/run/docker.sock}"
+
+log=/tmp/dockerd.log
+
+if docker info > /dev/null 2>&1; then
+  echo "docker is already running at ${DOCKER_HOST}"
+  exit 0
+fi
+
+if [[ ! -w /sys/fs/cgroup ]]; then
+  echo "/sys/fs/cgroup is read only, so this container is not privileged." >&2
+  echo "devcontainer.json passes --privileged. Rebuild the container." >&2
+  exit 1
+fi
+
+# overlay2 cannot stack on an overlay filesystem, and this container's root is
+# one, so /var/lib/docker sits on overlay and the daemon fails to start with
+# "failed to mount overlay: invalid argument".
+#
+# vfs copies every layer instead of stacking them. It works anywhere and it is
+# slow and large, which is a cost, not a fault. Override with
+# DOCKER_STORAGE_DRIVER on a host where overlay2 does stack.
+sudo mkdir -p /var/lib/docker
+driver="${DOCKER_STORAGE_DRIVER:-}"
+if [[ -z $driver ]]; then
+  driver=overlay2
+  if [[ $(stat -f -c %T /var/lib/docker) == overlayfs ]]; then
+    driver=vfs
+  fi
+fi
+
+echo "starting dockerd with the ${driver} storage driver"
+
+# setsid detaches it from this terminal's session, so the daemon outlives the
+# shell that started it. `sudo -b` alone leaves it in the session's process
+# group, and it dies with the shell.
+sudo setsid sh -c "nohup dockerd --host=${DOCKER_HOST} --storage-driver=${driver} >> ${log} 2>&1 &"
+
+for _ in $(seq 1 60); do
+  # Poll with sudo. The daemon runs as root and its socket belongs to root, so
+  # an unprivileged check can never succeed and would wait out the loop against
+  # a daemon that is already up.
+  if sudo docker info > /dev/null 2>&1; then
+    # The tests run as the container user.
+    sudo chmod 666 /var/run/docker.sock
+    echo "docker is up at ${DOCKER_HOST}"
+    exit 0
+  fi
+  sleep 1
+done
+
+echo "dockerd did not come up in 60s. see ${log}" >&2
+exit 1
