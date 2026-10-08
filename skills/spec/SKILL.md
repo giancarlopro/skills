@@ -11,9 +11,9 @@ Write a spec from the current conversation and codebase understanding. Do not in
 
 2. Decide the seams at which the feature gets tested. A **seam** is a place where a test replaces a real part with a fake one. Prefer a seam that exists. Choose the highest seam you can. Fewer seams are better. One is ideal.
 
-3. Write the spec to `docs/specs/<NNN>-<kebab-case-name>.md`. `NNN` is the next free three-digit number. With no specs yet, start at `000`. Create the directory if it does not exist. Use the template below.
+3. Write the spec to `docs/specs/<NNN>-<kebab-case-name>.md`. `NNN` is the next free three-digit number. With no specs yet, start at `000`. Create the directory if it does not exist. Use the template below. When the spec replaces an earlier spec, carry over every decision that still holds. The new spec stands alone. Do not edit or delete the earlier spec.
 
-4. Tell the user the path. List every decision the spec makes that the conversation did not. Do not build.
+4. Tell the user the path. List every decision the spec makes that the conversation did not. List every behaviour that runs today and the spec removes. Do not build.
 
 The spec is the brief for the build. A small model may read it, so write down every decision it needs.
 
