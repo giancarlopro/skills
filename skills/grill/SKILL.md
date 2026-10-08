@@ -11,9 +11,13 @@ Ask one question at a time and wait for my answer. Give your recommended answer 
 
 Before each question, discover everything you can from the environment. Look at files, every git branch, tools, live systems you can reach, docs, code, and the web. Never ask me something you can find out yourself. Never state a fact you have not checked.
 
-Ask only about what changes the shape of the work: the goal, hard-to-reverse choices, and contradictions in what I told you. Default anything that is cheap to change once code exists.
+Ask only about what changes the shape of the work: the goal, hard-to-reverse choices, and contradictions in what I told you. Default anything that is cheap to change once code exists. A data model is never cheap: where data lives, its shape, and its keys.
+
+When the work replaces code that runs today, read what that code does first. Name each behaviour the plan drops, and ask me about it. Never drop a behaviour as a default.
 
 When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use. A fact is not a choice. Check a fact, or ask me about it.
+
+Then give a **Checked** list. It holds each fact the plan rests on, one line each, with where you checked it. A fact about another system counts: what a provider accepts, what a cluster runs, what v1 does. A fact you could not check is a question for me, not a line in this list.
 
 Then wait for one of two answers:
 
