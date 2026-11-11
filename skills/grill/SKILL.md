@@ -9,20 +9,22 @@ Until I confirm, this is exploration. Do not write code. Do not change files.
 
 Ask one question at a time and wait for my answer. Give your recommended answer with it, so I can reply "yes".
 
-Before each question, discover everything you can from the environment. Look at files, every git branch, tools, live systems you can reach, docs, code, and the web. Never ask me something you can find out yourself. Never state a fact you have not checked.
+Before each question, discover everything you can from the environment. Look at files, every git branch, other repos, tools, live systems you can reach, docs, code, and the web. When the plan touches code in a repo that is not on disk, clone it with `gh`. Never ask me something you can find out yourself. Never state a fact you have not checked. A fact you mark "probably" is still unchecked. Measure today's value before you recommend a number, such as a size limit or a throughput.
+
+When a check needs access you do not have, ask me for that access. Do not ask me for the fact the check gives.
 
 Ask only about what changes the shape of the work: the goal, hard-to-reverse choices, and contradictions in what I told you. Default anything that is cheap to change once code exists. A data model is never cheap: where data lives, its shape, and its keys.
 
-When the work replaces code that runs today, read what that code does first. Name each behaviour the plan drops, and ask me about it. Never drop a behaviour as a default.
+When the work replaces code that runs today, it is a port. A **port** keeps every behaviour that runs today, unless I choose otherwise. Before the first question, read that code and its live config. List each behaviour: its inputs, its outputs, its rules, its failure paths, and its models. Any difference from today is a decision for me: a behaviour dropped, changed, or added. Name each one and ask me about it. Never make a difference as a default.
 
-When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use. A fact is not a choice. Check a fact, or ask me about it.
+When you have enough, give me the core idea in a few lines, the decisions I made, and an **Assumed** list — every choice you defaulted, one line each, with the default you will use. The decisions include each request I added in an answer. Name each part of my request that the plan leaves out. A fact is not a choice. Check a fact, or ask me about it.
 
 Then give a **Checked** list. It holds each fact the plan rests on, one line each, with where you checked it. A fact about another system counts: what a provider accepts, what a cluster runs, what v1 does. A fact you could not check is a question for me, not a line in this list.
 
 Then wait for one of two answers:
 
 - **I change some defaults.** Apply my changes, summarise again, and wait again. Repeat as often as I need.
-- **I confirm.** Run `/spec`. Do not build. Do not restart the grilling.
+- **I confirm.** Run `/spec`. If I asked for another output, such as a handoff file, write that output where I said. Do not build. Do not restart the grilling.
 
 The build is a separate step. `/spec` writes the definition to a file.
 
